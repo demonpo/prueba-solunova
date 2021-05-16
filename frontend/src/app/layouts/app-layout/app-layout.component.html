@@ -1,0 +1,30 @@
+<div class="container-custom" [class.is-mobile]="mobileQuery.matches" >
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sideNav.toggle()"><mat-icon>menu</mat-icon></button>
+      <span>{{pageTitle}}</span>
+      <span class="spacer"></span>
+      <button (click)="logout()" mat-icon-button aria-label="logout">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #sideNav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <mat-list-item [routerLink]="nav.navLink" *ngFor="let nav of navLinks" >
+          <mat-icon matListIcon>{{nav.icon}}</mat-icon>
+          <h4 matLine>{{nav.name}}</h4>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+

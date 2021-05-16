@@ -1,0 +1,25 @@
+<div class="p-2">
+  <mat-card>
+    <mat-card-header class="is-flex  is-flex-direction-column is-align-items-center">
+      <mat-card-title class="m-5 mat-h1">{{user?.userName}}</mat-card-title>
+      <img src="assets/images/dito.png" mat-card-avatar style="width: 150px; height: 150px">
+    </mat-card-header>
+    <mat-card-content class="columns is-centered">
+      <mat-card class="column is-8" style="max-width: 600px; margin: auto">
+        <mat-card-content >
+          <mat-form-field  readonly="true" style="width: 100%">
+            <input placeholder="Nombre" matInput type="text" [value]="user?.name">
+          </mat-form-field>
+          <mat-form-field  readonly="true" style="width: 100%">
+            <input placeholder="Apellido" matInput type="text" [value]="user?.lastName">
+          </mat-form-field>
+          <mat-form-field  readonly="true" style="width: 100%">
+            <input placeholder="Email" matInput type="text" [value]="user?.email">
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
