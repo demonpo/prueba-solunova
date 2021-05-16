@@ -4,6 +4,7 @@ const boom = require("@hapi/boom");
 const jwt = require("jsonwebtoken");
 const ApiKeysService = require("../services/apiKeys");
 const UsersService = require("../services/users");
+const LogUserSessionService = require("../services/logUserSession");
 const validationHandler = require("../utils/middleware/validationHandler");
 
 const { createUserSchema } = require("../utils/schemas/users")
@@ -18,27 +19,29 @@ function authApi(app) {
 
     const apiKeysService = new ApiKeysService();
     const usersService = new UsersService();
+    const logUserSessionService = new LogUserSessionService();
 
     router.post("/login", async (req, res, next) => {
         const { apiKeyToken } =  req.body;
         if(!apiKeyToken) {
-            next(boom.unauthorized("apiKeyToken is required"));
+            return next(boom.unauthorized("apiKeyToken is required"));
         }
 
         passport.authenticate("basic", null, (error, user) => {
+            console.log("USER", user);
             try {
                 if (error || !user) {
-                    next(boom.unauthorized());
+                    return next(boom.unauthorized());
                 }
 
                 req.login(user, {session: false}, async () => {
                    if (error) {
-                       next(error)
+                       return next(error)
                    }
                    const apiKey = await apiKeysService.getApiKey({token: apiKeyToken});
 
                    if (!apiKey) {
-                       next(boom.unauthorized());
+                       return next(boom.unauthorized());
                    }
 
                    const {_id: id, lastName, userName, name, email} = user;
@@ -55,6 +58,11 @@ function authApi(app) {
                    const token = jwt.sign(payload, config.authJwtSecret, {
                        expiresIn: "15m"
                    });
+
+                   const logUserSession = {
+                       timestamp: Date.now(), userId: id, userName
+                   }
+                    await logUserSessionService.createLogUserSession({logUserSession});
 
                    return res.status(200).json({token, user: {id, name, lastName, userName, email}});
                 });
@@ -73,7 +81,7 @@ function authApi(app) {
                message: "user created"
            })
        } catch (e) {
-           next(e);
+           return next(e);
        }
     });
 

@@ -1,9 +1,17 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import {modulesNavlinks} from "./config/modules-navlinks";
+import {api} from "./config/api";
+import {apiProxy} from "./config/apiProxy";
+
 
 export const environment = {
-  production: false
+  production: false,
+  apiKeyToken : "7d22e4ebbfe5ca12a2ffb886b8b51415d9148d7c97a104ac5f78e86302f1f0c3",
+  modulesNavlinks,
+  api,
+  apiProxy
 };
 
 /*

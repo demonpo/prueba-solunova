@@ -31,7 +31,7 @@ function usersApi(app) {
     router.get(
         '/:userId',
         passport.authenticate('jwt', { session: false }),
-        scopesValidationHandler(['read:usersById']),
+        scopesValidationHandler(['read:users']),
         validationHandler(userIdSchema , 'params'),
         async function(req, res, next) {
             const { userId } = req.params;
@@ -44,7 +44,7 @@ function usersApi(app) {
                     message: 'User retrieved'
                 });
             } catch (err) {
-                next(err);
+                return next(err);
             }
         }
     );
@@ -65,7 +65,7 @@ function usersApi(app) {
                     message: 'User deleted'
                 });
             } catch (err) {
-                next(err);
+                return next(err);
             }
         }
     );

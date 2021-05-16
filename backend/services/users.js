@@ -13,9 +13,17 @@ class UsersService {
     }
 
     async getUser({email}) {
+        console.log("GET BY EMAIL");
         const [user] = await this.mongoDB.getAll(this.collection, {email});
         return user;
     }
+
+    async getUserByUserName({userName}) {
+        console.log("GET BY USERNAME");
+        const [user] = await this.mongoDB.getAll(this.collection, {userName});
+        return user;
+    }
+
 
     async getUserById({userId}) {
         const [user] = await this.mongoDB.getAll(this.collection, userId);
