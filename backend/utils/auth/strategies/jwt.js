@@ -14,7 +14,6 @@ passport.use(
         },
         async (tokenPayload, cb) => {
             const usersService = new UsersService();
-            console.log(tokenPayload);
             try {
                 const user = await usersService.getUser({email: tokenPayload.email});
                 if(!user) {

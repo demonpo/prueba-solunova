@@ -38,6 +38,7 @@ function usersApi(app) {
 
             try {
                 const user = await usersService.getUserById({ userId });
+                delete user.password;
 
                 res.status(200).json({
                     data: user,
