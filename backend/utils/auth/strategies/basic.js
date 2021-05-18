@@ -12,7 +12,6 @@ const {emailRE} = require("../../regexValidators");
 
 passport.use("basic",
     new BasicStrategy(async function(emailOrUserName, password, cb) {
-        console.log(typeof emailOrUserName);
         const userService = new UsersService();
 
         try {

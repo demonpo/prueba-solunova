@@ -5,6 +5,9 @@ import {environment} from '../../../environments/environment';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {AuthService} from "../../modules/core/services/auth/auth.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../store/app.reducers";
+import * as actions from "../../store/actions";
 
 @Component({
   selector: 'app-app-layout',
@@ -23,6 +26,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     media: MediaMatcher,
     private authService: AuthService,
     private router: Router,
+    private store: Store<AppState>
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -61,7 +65,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
+    this.store.dispatch(actions.logout({payload: ""}))
+    //this.authService.logout();
   }
 
 }

@@ -7,13 +7,17 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AuthService} from "../services/auth/auth.service";
+import {AppState} from "../../../store/app.reducers";
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
   ) {
+
+
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

@@ -1,37 +1,33 @@
 <div class="main-div">
-  <form [formGroup]="form" (ngSubmit)="login($event)">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="row">
-          <div class="col-xs">
-            <mat-form-field>
-              <input placeholder="Email o nickname" formControlName="emailOrUserName" matInput type="text">
-              <mat-error *ngIf="hasError(emailOrUserName, 'required')">Este campo es requerido</mat-error>
-              <mat-error *ngIf="hasError(emailOrUserName, 'IsEmailOrUserName')">Debes ingresar un email o nickname válido</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs">
-            <mat-form-field>
-              <input placeholder="password" formControlName="password" matInput  [type]="hide ? 'password' : 'text'">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button [disabled]="form.invalid" mat-raised-button color="primary" type="submit">Ingresar</button>
-        <button  mat-raised-button (click)="goToRegisterPage()">Registrarse</button>
-      </mat-card-actions>
-    </mat-card>
+  <div class="columns is-centered is-center is-align-items-center" style="width: 100%">
+    <form [formGroup]="form" (ngSubmit)="login($event)" class="column is-8"  style="max-width: 738px">
+      <mat-card style="width: 100%">
+        <mat-card-header>
+          <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <input placeholder="Email o nickname" formControlName="emailOrUserName" matInput type="text">
+            <mat-error *ngIf="hasError(emailOrUserName, 'required')">Este campo es requerido</mat-error>
+            <mat-error *ngIf="hasError(emailOrUserName, 'IsEmailOrUserName')">Debes ingresar un email o nickname válido</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input placeholder="password" formControlName="password" matInput  [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
 
-  </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button [disabled]="form.invalid" mat-raised-button color="primary" type="submit">Ingresar</button>
+          <button  mat-raised-button (click)="goToRegisterPage()">Registrarse</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+  </div>
+
 </div>
 
 

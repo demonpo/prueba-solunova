@@ -13,7 +13,6 @@ class LogUserSessionService {
 
 
     async createLogUserSession({ logUserSession }) {
-        console.log(logUserSession);
         const { timestamp, userId, userName } = logUserSession;
 
         const createdLogUserSession = await this.mongoDB.create(this.collection, {

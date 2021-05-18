@@ -26,7 +26,7 @@ class UsersService {
 
 
     async getUserById({userId}) {
-        const [user] = await this.mongoDB.getAll(this.collection, userId);
+        const user = await this.mongoDB.get(this.collection, userId);
         return user;
     }
 

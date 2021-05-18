@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import {AuthService} from '../../../core/services/auth/auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {IsEmailOrUserName} from "../../../../utils/custom-form-validators/email-username.validator";
-
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../../store/app.reducers";
+import * as actions from "../../../../store/actions";
 
 
 @Component({
@@ -25,11 +27,23 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private store: Store<AppState>
   ) {
   }
 
   ngOnInit(): void {
+    this.store.select('auth').subscribe( ({ sessionInfo, loading, error }) => {
+      if(error) {
+        this.snackBar.open('Usuario o contraseña no valido', 'Cerrar', {
+          duration: 2000,
+        });
+      }
+      if(sessionInfo) {
+        this.router.navigate(['/perfil']).then();
+      }
+
+    });
   }
 
   get emailOrUserName(): FormControl {
@@ -47,17 +61,11 @@ export class LoginComponent implements OnInit {
   login(event: Event): void {
     event.preventDefault();
     if (this.form.valid) {
-      console.log('VALID');
       const value = this.form.value;
-      this.authService.login(value.emailOrUserName, value.password)
-      .then((response) => {
-        this.router.navigate(['/perfil']).then();
-      })
-      .catch(() => {
-        this.snackBar.open('Usuario o contraseña no valido', 'Cerrar', {
-          duration: 2000,
-        });
-      });
+      this.store.dispatch(actions.login({
+        emailOrUserName: value.emailOrUserName as string,
+        password: value.password as string
+      }));
     }
   }
 
